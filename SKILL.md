@@ -157,7 +157,9 @@ xray/
 
 ### Phase 6：更新 XRAY-CHANGELOG.md
 
-在项目根目录 `XRAY-CHANGELOG.md` 顶部追加（新记录在最前面）：
+在项目根目录 `XRAY-CHANGELOG.md` 顶部追加（新记录在最前面）。
+
+**时间戳必须使用北京时间（UTC+8）**，通过 `date -u -v+8H '+%Y-%m-%d %H:%M'`（macOS）或 `TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M'` 获取。
 
 ```markdown
 ## [YYYY-MM-DD HH:mm] @昵称
