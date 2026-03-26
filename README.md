@@ -1,52 +1,37 @@
 # XRAY — 项目架构文档自动维护
 
+AI 写的代码，AI 来维护文档。在 Claude Code 中自动感知架构变更，生成可视化文档站。
+
 ## 安装
 
-### 1. 复制 skill 文件
 ```bash
-mkdir -p ~/.claude/skills/xray
-cp SKILL.md ~/.claude/skills/xray/
+git clone git@github.com:fly0pants/xray-skill.git /tmp/xray-skill && /tmp/xray-skill/install.sh
 ```
 
-### 2. 安装 hook
-```bash
-mkdir -p ~/.claude/hooks
-cp hooks/xray-push-detect.sh ~/.claude/hooks/
-chmod +x ~/.claude/hooks/xray-push-detect.sh
-```
-
-在 `~/.claude/settings.json` 的 `hooks` 中添加：
-```json
-"PostToolUse": [
-  {
-    "matcher": "Bash",
-    "hooks": [
-      {
-        "type": "command",
-        "command": "~/.claude/hooks/xray-push-detect.sh"
-      }
-    ]
-  }
-]
-```
-
-### 3. 添加架构感知指令
-
-在 `~/.claude/CLAUDE.md` 中添加：
-```markdown
-## XRAY 架构文档
-在对话过程中，如果意识到涉及架构级变更，主动向用户提议执行 /xray 更新架构文档。
-```
+重启 Claude Code 即可使用。
 
 ## 使用
 
-- `/xray` — 手动触发，分析当前项目并生成/更新架构文档
-- 自动触发 — git push 后自动提醒，Claude 对话中主动感知
+- `/xray` — 手动触发，生成/更新架构文档
+- 自动触发 — git push 后自动提醒，对话中 Claude 主动感知架构变更
 
-## 输出文件
+## 输出
 
-- `XRAY.html` — 项目根目录，单文件自包含架构文档
-- `XRAY-CHANGELOG.md` — 项目根目录，变更日志
+在项目根目录生成 `xray/` 文档站：
+
+```
+xray/
+├── index.html          # 导航首页 + 项目概览
+├── modules.html        # 目录结构与模块职责
+├── api-routes.html     # API 路由清单
+├── data-flow.html      # 数据流与上下游
+├── database.html       # 数据库表结构
+├── deployment.html     # 部署架构
+├── env-config.html     # 环境变量与配置
+└── integrations.html   # 第三方服务集成
+```
+
+变更日志：`XRAY-CHANGELOG.md`
 
 ## 依赖
 
